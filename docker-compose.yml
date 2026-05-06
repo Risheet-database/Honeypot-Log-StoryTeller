@@ -1,0 +1,145 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: honeypot_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: honeypot_user
+      POSTGRES_PASSWORD: honeypot_password
+      POSTGRES_DB: honeypot_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio
+    container_name: honeypot_minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: honeypot_rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    container_name: honeypot_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://honeypot_user:honeypot_password@postgres:5432/honeypot_db
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+    depends_on:
+      - postgres
+      - minio
+      - rabbitmq
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    container_name: honeypot_frontend
+    restart: always
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+
+  preprocessor:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    container_name: honeypot_preprocessor
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://honeypot_user:honeypot_password@postgres:5432/honeypot_db
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - WORKER_TYPE=preprocessor
+    depends_on:
+      - postgres
+      - minio
+      - rabbitmq
+
+  session_builder:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    container_name: honeypot_session_builder
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://honeypot_user:honeypot_password@postgres:5432/honeypot_db
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - WORKER_TYPE=session_builder
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  analyzer:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    container_name: honeypot_analyzer
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://honeypot_user:honeypot_password@postgres:5432/honeypot_db
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - GROQ_API_KEY=${GROQ_API_KEY:-your_groq_api_key_here}
+      - WORKER_TYPE=analyzer
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  reporter:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    container_name: honeypot_reporter
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://honeypot_user:honeypot_password@postgres:5432/honeypot_db
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - WORKER_TYPE=reporter
+    depends_on:
+      - postgres
+      - minio
+      - rabbitmq
+
+volumes:
+  postgres_data:
+  minio_data:
